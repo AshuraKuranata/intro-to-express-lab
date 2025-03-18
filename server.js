@@ -6,27 +6,27 @@ app.listen(3000, () => {
 })
 
 // 1. Be Polite to the User
-// app.get('/greetings/:userName', (req, res) => {
-//     res.send(`<h1>Welcome, ${req.params.userName}</h1>`)
-// })
+app.get('/greetings/:userName', (req, res) => {
+    res.send(`<h1>Welcome, ${req.params.userName}</h1>`)
+})
 
 // 2. Rolling the Dice
 
-// app.get('/roll/:diceValue', (req, res) => {
-//     function numCheck(value) {
-//         return !isNaN(value) && value !== "";
-//     }
-//     function diceRoll(min, max) {
-//         return Math.floor(Math.random() * (max - min + 1) + min)
-//     }
-//     let numInput = req.params.diceValue
-//     if (numCheck(numInput) === true) {
-//         console.log(Math.random(numInput))
-//         res.send(`<h1>You rolled a ${diceRoll(1, numInput)}</h1>.`)
-//     } else {
-//         res.send(`<h1>Invalid input, please enter a number value.`)
-//     }
-// })
+app.get('/roll/:diceValue', (req, res) => {
+    function numCheck(value) {
+        return !isNaN(value) && value !== "";
+    }
+    function diceRoll(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min)
+    }
+    let numInput = req.params.diceValue
+    if (numCheck(numInput) === true) {
+        console.log(Math.random(numInput))
+        res.send(`<h1>You rolled a ${diceRoll(1, numInput)}</h1>.`)
+    } else {
+        res.send(`<h1>Invalid input, please enter a number value.`)
+    }
+})
 
 // 3. I Want THAT One!
 
@@ -37,24 +37,35 @@ app.get('/collectibles/:collectName', (req, res) => {
         {name: 'pencils', price: 5},
     ]
     const item = req.params.collectName
-    if (item === collectibles[0].name) {
-        res.send(`You want ${collectibles[0].name}? It's yours for ${collectibles[0].price}!`)
-        }
-    else if (item === collectibles[1].name) {
-        res.send(`You want ${collectibles[1].name}? It's yours for ${collectibles[1].price}!`)
-        }
-    else if (item === collectibles[2].name) {
-        res.send(`You want ${collectibles[2].name}? It's yours for ${collectibles[2].price}!`)
-        }
-    else {
-        res.send(`This is not in stock, check back next Tuesday for updated inventory.`)
+
+    // WORKING CODE, but clunky
+//     if (item === collectibles[0].name) {
+//         res.send(`You want ${collectibles[0].name}? It's yours for ${collectibles[0].price}!`)
+//         }
+//     else if (item === collectibles[1].name) {
+//         res.send(`You want ${collectibles[1].name}? It's yours for ${collectibles[1].price}!`)
+//         }
+//     else if (item === collectibles[2].name) {
+//         res.send(`You want ${collectibles[2].name}? It's yours for ${collectibles[2].price}!`)
+//         }
+//     else {
+//         res.send(`This is not in stock, check back next Tuesday for updated inventory.`)
+//     }
+// })
+
+for (i = 0; i < collectibles.length; i++) {
+    if (item == i) {
+        res.send(`You want ${collectibles[i].name}? It's yours for ${collectibles[i].price}!`)
+    }
+    res.send(`This is not in stock, check back next Tuesday for updated inventory.`)
     }
 })
 
+
 //  BAD CODE: WHY ISN'T THE LOOP WORKING?
-//     for (i = 0; i <= collectibles.length; i++) {
-//         console.log(i)
-//         if (item === i) {
+// Apparently, if you add the 'res.send' into the "if" statement it messes up the loop.  Make it go outside of the if statement and then it works.
+//     for (i = 0; i < collectibles.length; i++) {
+//         if (item == i) {
 //             res.send(`You want ${collectibles[i].name}? It's yours for ${collectibles[i].price}!`)
 //         }
 //         else {
@@ -62,6 +73,7 @@ app.get('/collectibles/:collectName', (req, res) => {
 //         }
 //     }
 // })
+
 
 // 4. Filter Shoes by Query Parameter
 
