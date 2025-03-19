@@ -1,10 +1,6 @@
 const express = require('express')
 const app = express();
 
-app.listen(3000, () => {
-    console.log('Listening on port 3000')
-})
-
 // 1. Be Polite to the User
 app.get('/greetings/:userName', (req, res) => {
     res.send(`<h1>Welcome, ${req.params.userName}</h1>`)
@@ -21,7 +17,6 @@ app.get('/roll/:diceValue', (req, res) => {
     }
     let numInput = req.params.diceValue
     if (numCheck(numInput) === true) {
-        console.log(Math.random(numInput))
         res.send(`<h1>You rolled a ${diceRoll(1, numInput)}</h1>.`)
     } else {
         res.send(`<h1>Invalid input, please enter a number value.`)
@@ -52,15 +47,13 @@ app.get('/collectibles/:collectName', (req, res) => {
 //         res.send(`This is not in stock, check back next Tuesday for updated inventory.`)
 //     }
 // })
-
-for (i = 0; i < collectibles.length; i++) {
-    if (item == i) {
-        res.send(`You want ${collectibles[i].name}? It's yours for ${collectibles[i].price}!`)
-    }
-    res.send(`This is not in stock, check back next Tuesday for updated inventory.`)
-    }
+    for (i = 0; i < collectibles.length; i++) {
+        if (item == i) {
+            res.send(`You want ${collectibles[i].name}? It's yours for ${collectibles[i].price}!`)
+        }
+        res.send(`This is not in stock, check back next Tuesday for updated inventory.`)
+        }
 })
-
 
 //  BAD CODE: WHY ISN'T THE LOOP WORKING?
 // Apparently, if you add the 'res.send' into the "if" statement it messes up the loop.  Make it go outside of the if statement and then it works.
@@ -73,7 +66,6 @@ for (i = 0; i < collectibles.length; i++) {
 //         }
 //     }
 // })
-
 
 // 4. Filter Shoes by Query Parameter
 
@@ -111,6 +103,8 @@ app.get('/shoes', (req, res) =>{
         }
     }
     res.send(`List of shoes over $${shoePrice} value: ${minList}.<br> List of shoes under $${shoePrice} value: ${maxList}.<br> List of '${shoeType}' type shoes: ${typeList}.<br> List of all shoes: ${fullList}.`)
+})
 
-
+app.listen(3000, () => {
+    console.log('Listening on port 3000')
 })
